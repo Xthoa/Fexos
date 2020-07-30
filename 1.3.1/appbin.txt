@@ -1,0 +1,13 @@
+#app make
+#bin ; c
+$(app).bin: $(app).asm makefile
+	nasm $(app).asm -f bin -o $(app).bin -l $(app).lst
+
+$(app).gas: $(app).c makefile
+	cc1 $(app).c -o $(app).gas
+
+$(app).nas: $(app).gas makefile
+	gas2nask $(app).gas $(app).nas
+
+$(app).asm: $(app).nas makefile
+	python nask2nasm.py $(app).nas $(app).asm
